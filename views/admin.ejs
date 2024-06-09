@@ -46,7 +46,7 @@
 
         async function fetchItems() {
             try {
-                const response = await fetch('http://localhost:3000/items');
+                const response = await fetch('/items');
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -130,7 +130,7 @@
             }
 
             try {
-                const response = await fetch(`http://localhost:3000/items/${itemId}`, {
+                const response = await fetch(`/items/${itemId}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'

@@ -43,6 +43,22 @@ function buyButtonClicked() {
     var cartContent = document.getElementsByClassName('cart-content')[0];
     var orderedItems = getOrderedItems();
     console.log(JSON.stringify(orderedItems, null, 2)); // Log the ordered items as a JSON string
+
+    fetch('http://localhost:3000/order', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(orderedItems),
+    })
+    .then(response => response.text())
+    .then(data => {
+        console.log(data);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+
     while (cartContent.hasChildNodes()) {
         cartContent.removeChild(cartContent.firstChild);
     }
@@ -76,6 +92,7 @@ function getOrderedItems() {
 
     return orderedItems;
 }
+
 
 function removeCartItems(event) {
     var buttonClicked = event.target;

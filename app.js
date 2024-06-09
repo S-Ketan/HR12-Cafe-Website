@@ -3,7 +3,6 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 const cors = require('cors');
 const createError = require('http-errors');
 
@@ -26,6 +25,17 @@ db.once('open', () => {
     console.log('Connected to MongoDB');
 });
 
+// Define a schema and model if not already defined
+const itemSchema = new mongoose.Schema({
+    title: String,
+    price: Number,
+    quantity: Number,
+    imgSrc: String,
+    status: Number
+});
+
+const Item = mongoose.models.Item || mongoose.model('Item', itemSchema);
+
 // Set up view engine
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -42,6 +52,35 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/order', orderRouter);
+
+// New route to fetch items
+app.get('/items', async (req, res) => {
+    try {
+        const items = await Item.find({});
+        res.json(items);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+// New route to update item status
+app.put('/items/:id', async (req, res) => {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    try {
+        const item = await Item.findById(id);
+        if (!item) {
+            return res.status(404).json({ message: 'Item not found' });
+        }
+
+        item.status = status;
+        await item.save();
+        res.json({ message: 'Item updated successfully', item });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
 
 // Catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -9,7 +9,8 @@ const itemSchema = new mongoose.Schema({
     title: String,
     price: Number,
     quantity: Number,
-    imgSrc: String
+    imgSrc: String,
+    status: Number
 });
 
 const Item = mongoose.model('Item', itemSchema);

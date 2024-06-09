@@ -10,7 +10,7 @@ closeCart.onclick = () => {
     cart.classList.remove('active');
 };
 
-if (document.readyState == 'loading') {
+if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', ready);
 } else {
     ready();
@@ -42,7 +42,7 @@ function buyButtonClicked() {
     alert('Order Placed');
     var cartContent = document.getElementsByClassName('cart-content')[0];
     var orderedItems = getOrderedItems();
-    console.log(JSON.stringify(orderedItems, null, 2)); // Log the ordered items as a JSON string
+    console.log('Ordered Items:', JSON.stringify(orderedItems, null, 2)); // Log the ordered items as a JSON string
 
     fetch('http://localhost:3000/order', {
         method: 'POST',
@@ -53,7 +53,7 @@ function buyButtonClicked() {
     })
     .then(response => response.text())
     .then(data => {
-        console.log(data);
+        console.log('Response from server:', data);
     })
     .catch((error) => {
         console.error('Error:', error);
@@ -81,18 +81,20 @@ function getOrderedItems() {
         var price = parseFloat(priceElement.innerText.replace('$', ''));
         var quantity = quantityElement.value;
         var imgSrc = imgElement.src;
+        var status = cartBox.querySelector('.cart-status').value; // Get status from hidden input
 
         orderedItems.push({
             title: title,
             price: price,
             quantity: quantity,
-            imgSrc: imgSrc
+            imgSrc: imgSrc,
+            status: parseInt(status) // Ensure status is an integer
         });
     }
 
+    console.log('Collected ordered items:', orderedItems);
     return orderedItems;
 }
-
 
 function removeCartItems(event) {
     var buttonClicked = event.target;
@@ -114,16 +116,18 @@ function addCartClicked(event) {
     var title = shopProducts.getElementsByClassName('product-title')[0].innerText;
     var price = shopProducts.getElementsByClassName('price')[0].innerText;
     var productImg = shopProducts.getElementsByClassName('product-img')[0].src;
-    addProductToCart(title, price, productImg);
+    var status = 0; // Default status
+
+    addProductToCart(title, price, productImg, status);
     updateTotal();
 }
 
-function addProductToCart(title, price, productImg) {
+function addProductToCart(title, price, productImg, status) {
     var cartShopBox = document.createElement('div');
     cartShopBox.classList.add('cart-box');
     var cartItems = document.getElementsByClassName('cart-content')[0];
     var cartItemsNames = cartItems.getElementsByClassName('cart-product-title');
-    
+
     for (let i = 0; i < cartItemsNames.length; i++) {
         if (cartItemsNames[i].innerText == title) {
             alert("This item is already added to the cart.");
@@ -139,6 +143,7 @@ function addProductToCart(title, price, productImg) {
             <input type="number" value="1" class="cart-quantity">
         </div>
         <i class='bx bxs-trash-alt cart-remove'></i>
+        <input type="hidden" value="${status}" class="cart-status">
     `;
 
     cartShopBox.innerHTML = cartBoxContent;

@@ -44,7 +44,7 @@ function buyButtonClicked() {
     var orderedItems = getOrderedItems();
     console.log('Ordered Items:', JSON.stringify(orderedItems, null, 2)); // Log the ordered items as a JSON string
 
-    fetch('http://localhost:3000/order', {
+    fetch('/order', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

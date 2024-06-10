@@ -1,3 +1,5 @@
+// main.js
+
 let cartIcon = document.querySelector('#cart-icon');
 let cart = document.querySelector('.cart');
 let closeCart = document.querySelector('#close-btn');
@@ -78,7 +80,7 @@ function getOrderedItems() {
         var imgElement = cartBox.getElementsByClassName('cart-img')[0];
 
         var title = titleElement.innerText;
-        var price = parseFloat(priceElement.innerText.replace('$', ''));
+        var price = parseFloat(priceElement.innerText.replace('₹', ''));
         var quantity = quantityElement.value;
         var imgSrc = imgElement.src;
         var status = cartBox.querySelector('.cart-status').value; // Get status from hidden input
@@ -118,11 +120,16 @@ function addCartClicked(event) {
     var productImg = shopProducts.getElementsByClassName('product-img')[0].src;
     var status = 0; // Default status
 
-    addProductToCart(title, price, productImg, status);
-    updateTotal();
+    // Prompt for quantity
+    var quantity = prompt("Enter quantity:");
+    if (quantity !== null && quantity !== "") {
+        // Add the product to the cart
+        addProductToCart(title, price, productImg, status, quantity);
+        updateTotal();
+    }
 }
 
-function addProductToCart(title, price, productImg, status) {
+function addProductToCart(title, price, productImg, status, quantity) {
     var cartShopBox = document.createElement('div');
     cartShopBox.classList.add('cart-box');
     var cartItems = document.getElementsByClassName('cart-content')[0];
@@ -140,7 +147,7 @@ function addProductToCart(title, price, productImg, status) {
         <div class="detail-box">
             <div class="cart-product-title">${title}</div>
             <div class="cart-price">${price}</div>
-            <input type="number" value="1" class="cart-quantity">
+            <input type="number" value="${quantity}" class="cart-quantity">
         </div>
         <i class='bx bxs-trash-alt cart-remove'></i>
         <input type="hidden" value="${status}" class="cart-status">
@@ -161,10 +168,10 @@ function updateTotal() {
         var cartBox = cartBoxes[i];
         var priceElement = cartBox.getElementsByClassName('cart-price')[0];
         var quantityElement = cartBox.getElementsByClassName('cart-quantity')[0];
-        var price = parseFloat(priceElement.innerText.replace('$', ''));
+        var price = parseFloat(priceElement.innerText.replace('₹', ''));
         var quantity = quantityElement.value;
         total += price * quantity;
     }
     total = Math.round(total * 100) / 100;
-    document.getElementsByClassName('total-price')[0].innerText = `$${total}`;
+    document.getElementsByClassName('total-price')[0].innerText = `₹${total}`;
 }

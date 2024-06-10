@@ -5,13 +5,16 @@ const router = express.Router();
 const mongoose = require('mongoose');
 
 // Define a schema and model for the ordered items
+
 const itemSchema = new mongoose.Schema({
     title: String,
     price: Number,
     quantity: Number,
     imgSrc: String,
-    status: Number
+    status: Number,
+    createdAt: { type: Date, default: Date.now }
 });
+
 
 const Item = mongoose.model('Item', itemSchema);
 

@@ -142,16 +142,50 @@ function addProductToCart(title, price, productImg, status, quantity) {
         }
     }
 
-    var cartBoxContent = `
-        <img src="${productImg}" alt="" class="cart-img">
-        <div class="detail-box">
-            <div class="cart-product-title">${title}</div>
-            <div class="cart-price">${price}</div>
-            <input type="number" value="${quantity}" class="cart-quantity">
+// Define the changeQuantity function
+function changeQuantity(inputElement, delta) {
+    // Get the current value and parse it as a number
+    var currentValue = parseInt(inputElement.value);
+    // Add the delta to the current value
+    var newValue = currentValue + delta;
+    // Make sure the new value is within bounds (assuming a minimum quantity of 1)
+    if (newValue < 1) {
+        newValue = 1;
+    }
+    // Update the input element with the new value
+    inputElement.value = newValue;
+    updateTotal()
+}
+
+
+// Now you can use the cartBoxContent template literal
+var cartBoxContent = `
+    <img src="${productImg}" alt="" class="cart-img">
+    <div class="detail-box">
+        <div class="cart-product-title">${title}</div>
+        <div class="cart-price">${price}</div>
+        <div class="quantity-controls">
+            <button class="quantity-btn minus" style="padding: 5px 10px; border: none; background-color: #FF847C; cursor: pointer; box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);">-</button>
+            <input type="number" value="${quantity}" class="cart-quantity" style="width: 50px; text-align: center;">
+            <button class="quantity-btn plus" style="padding: 5px 10px; border: none; background-color: #70C1B3; cursor: pointer; box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);">+</button>
         </div>
-        <i class='bx bxs-trash-alt cart-remove'></i>
-        <input type="hidden" value="${status}" class="cart-status">
-    `;
+    </div>
+    <i class='bx bxs-trash-alt cart-remove'></i>
+    <input type="hidden" value="${status}" class="cart-status">
+`;
+
+// Now, select the plus and minus buttons and attach event listeners dynamically
+document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('quantity-btn')) {
+        var button = event.target;
+        var inputElement = button.parentNode.querySelector('.cart-quantity');
+        var delta = button.classList.contains('plus') ? 1 : -1;
+        changeQuantity(inputElement, delta);
+    }
+    updateTotal()
+});
+
+    
 
     cartShopBox.innerHTML = cartBoxContent;
     cartItems.append(cartShopBox);

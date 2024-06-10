@@ -165,9 +165,9 @@ var cartBoxContent = `
         <div class="cart-product-title">${title}</div>
         <div class="cart-price">${price}</div>
         <div class="quantity-controls">
-            <button class="quantity-btn minus" style="padding: 5px 10px; border: none; background-color: #FF847C; cursor: pointer; box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);">-</button>
-            <input type="number" value="${quantity}" class="cart-quantity" style="width: 50px; text-align: center;">
-            <button class="quantity-btn plus" style="padding: 5px 10px; border: none; background-color: #70C1B3; cursor: pointer; box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);">+</button>
+            <button class="quantity-btn minus" style="padding: 5px 10px; border: none; background-color: #FF847C; cursor: pointer; box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2); border-radius:20px; scale:1;">-</button>
+            <input type="number" value="${quantity}" class="cart-quantity" style="width: 50px; text-align: center; scale:1.1; margin:3px;">
+            <button class="quantity-btn plus" style="padding: 5px 10px; border: none; background-color: #70C1B3; cursor: pointer; box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2); border-radius:20px; scale:1;">+</button>
         </div>
     </div>
     <i class='bx bxs-trash-alt cart-remove'></i>

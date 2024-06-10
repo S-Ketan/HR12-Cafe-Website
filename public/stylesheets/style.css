@@ -94,7 +94,7 @@ header{
   width: 100px;
   height: 100px;
   object-fit: contain;
-  padding: 10px;
+  padding: 5px;
 }
 
 .detail-box{
@@ -152,6 +152,7 @@ header{
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
+  border-radius: 10px;
 }
 
 .btn-buy:hover{
@@ -168,7 +169,26 @@ header{
 }
 
 section{
-  padding: 4rem 0 3rem;
+  padding: 2rem 0 3rem;
+}
+
+.mainMenu{
+  display: flex;
+  gap: 3rem;
+}
+
+.menuList{
+  display: flex;
+  gap: 3rem;
+}
+
+.menuList > a > li{
+  color: var(--text-color);
+  cursor: pointer;
+  padding: 0.5rem;
+  background-color: rgb(236, 236, 236);
+  border-radius: 10px;
+  box-shadow: 3px 3px 5px #888;
 }
 
 .section-title{
@@ -189,8 +209,11 @@ section{
 }
 
 .product-box{
+  height: 475px;
+  border-radius: 10px;
   position: relative;
-  border: 1px solid var(--bg-color);
+  background-color: rgb(236, 236, 236);
+  border: 1px solid rgb(236, 236, 236);
   padding: 2px;
 }
 
@@ -201,8 +224,9 @@ section{
 }
 
 .product-img{
+  border-radius: 10px;
   width: 100%;
-  height: 400px;
+  height: 375px;
   margin-bottom: 0.5rem;
 }
 
@@ -210,21 +234,27 @@ section{
   font-weight: 600;
   font-size: 1.1rem;
   text-transform: uppercase;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.3rem;
+  margin-left: 0.2rem;
 }
 
 .price{
+  font-size: larger;
   font-weight: 500;
+  padding: 5px;
 }
 
 .add-cart{
   position: absolute;
-  bottom: 0;
-  right: 0;
+  bottom: 13;
+  right: 3;
   background: var(--text-color);
   color: var(--bg-color);
-  padding: 6px;
+  padding: 10px;
   cursor: pointer;
+  border-bottom-right-radius: 10px ;
+  border-radius: 20px;
+  scale: 0.95;
 }
 
 .add-cart:hover{
@@ -242,35 +272,48 @@ section{
 
 
 @media (max-width: 1080px) {
-  .nav{
-    padding: 15px;  
+  
+}
+
+@media (max-width: 430px) {
+  
+}
+
+/* Styles for screens with a width of 800px or less */
+@media only screen and (max-width: 800px) {
+  .nav {
+    padding: 11px;
   }
-  .section{
+  .logo {
+    font-size: 1rem;
+  }
+  .cart {
+    width: 320px;
+  }
+  .mainMenu {
+    display: inline;
+  }
+  .menuList{
+    margin-bottom: 1rem;
+  }
+  .shop {
+    margin-top: 1rem !important; /* This will override the previous margin-top */
+  }
+}
+
+/* Styles for screens with a width of 1200px or more */
+@media only screen and (min-width: 1200px) {
+  .nav {
+    padding: 15px;
+  }
+  .section {
     padding: 3rem 0 2rem;
   }
-  .container{
+  .container {
     margin: 0 auto;
     width: 90%;
   }
-  .shop{
+  .shop {
     margin-top: 2rem !important;
-  }
-}
-
-@media (max-width: 430px){
-  .nav{
-    padding: 11px;
-  }
-  .logo{
-    font-size: 1rem;
-  }
-  .cart{
-    width: 320px;
-  }
-}
-
-@media (max-width: 360px){
-  .shop{
-    margin-top: 1rem !important;
   }
 }

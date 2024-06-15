@@ -26,6 +26,7 @@ img{
 
 body{
   color: var(--text-color);
+  background-image: url('../images/6055738.jpg');
 }
 
 .container{

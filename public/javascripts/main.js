@@ -1,8 +1,12 @@
-// main.js
 
 let cartIcon = document.querySelector('#cart-icon');
 let cart = document.querySelector('.cart');
 let closeCart = document.querySelector('#close-btn');
+let numberModal = document.getElementById('numberModal');
+let closeModal = document.querySelector('.modal .close');
+let verifyButton = document.getElementById('verifyNumber');
+let phoneNumberInput = document.getElementById('phoneNumber');
+let otp = document.getElementById(`#otpSection`);
 
 cartIcon.onclick = () => {
     cart.classList.add('active');
@@ -19,32 +23,46 @@ if (document.readyState === 'loading') {
 }
 
 function ready() {
-    var removeCartButton = document.getElementsByClassName('cart-remove');
-    for (var i = 0; i < removeCartButton.length; i++) {
-        var button = removeCartButton[i];
+    let removeCartButton = document.getElementsByClassName('cart-remove');
+    for (let i = 0; i < removeCartButton.length; i++) {
+        let button = removeCartButton[i];
         button.addEventListener('click', removeCartItems);
     }
 
-    var quantityInputs = document.getElementsByClassName('cart-quantity');
-    for (let i = 0; i < quantityInputs.length; i++) {
-        const input = quantityInputs[i];
-        input.addEventListener('change', quantityChanged);
-    }
-
-    var addCart = document.getElementsByClassName('add-cart');
+    let addCart = document.getElementsByClassName('add-cart');
     for (let i = 0; i < addCart.length; i++) {
         const button = addCart[i];
         button.addEventListener('click', addCartClicked);
     }
 
     document.getElementsByClassName('btn-buy')[0].addEventListener('click', buyButtonClicked);
+
+    verifyButton.addEventListener('click', verifyNumber);
+    closeModal.addEventListener('click', () => {
+        numberModal.style.display = 'none';
+    });
+    window.addEventListener('click', (event) => {
+        if (event.target == numberModal) {
+            numberModal.style.display = 'none';
+        }
+    });
 }
 
 function buyButtonClicked() {
+    numberModal.style.display = 'block';
+}
+
+function verifyNumber() {
+    let phoneNumber = phoneNumberInput.value.trim();
+    if (phoneNumber === "" || !/^\d{10}$/.test(phoneNumber)) {
+        alert('Please enter a valid 10-digit phone number.');
+        return;
+    }
+
     alert('Order Placed');
-    var cartContent = document.getElementsByClassName('cart-content')[0];
-    var orderedItems = getOrderedItems();
-    console.log('Ordered Items:', JSON.stringify(orderedItems, null, 2)); // Log the ordered items as a JSON string
+    let cartContent = document.getElementsByClassName('cart-content')[0];
+    let orderedItems = getOrderedItems();
+    console.log('Ordered Items:', JSON.stringify(orderedItems, null, 2)); 
 
     fetch('/order', {
         method: 'POST',
@@ -68,29 +86,29 @@ function buyButtonClicked() {
 }
 
 function getOrderedItems() {
-    var cartItems = document.getElementsByClassName('cart-content')[0];
-    var cartBoxes = cartItems.getElementsByClassName('cart-box');
-    var orderedItems = [];
+    let cartItems = document.getElementsByClassName('cart-content')[0];
+    let cartBoxes = cartItems.getElementsByClassName('cart-box');
+    let orderedItems = [];
 
     for (let i = 0; i < cartBoxes.length; i++) {
-        var cartBox = cartBoxes[i];
-        var titleElement = cartBox.getElementsByClassName('cart-product-title')[0];
-        var priceElement = cartBox.getElementsByClassName('cart-price')[0];
-        var quantityElement = cartBox.getElementsByClassName('cart-quantity')[0];
-        var imgElement = cartBox.getElementsByClassName('cart-img')[0];
+        let cartBox = cartBoxes[i];
+        let titleElement = cartBox.getElementsByClassName('cart-product-title')[0];
+        let priceElement = cartBox.getElementsByClassName('cart-price')[0];
+        let quantityElement = cartBox.getElementsByClassName('cart-quantity')[0];
+        let imgElement = cartBox.getElementsByClassName('cart-img')[0];
 
-        var title = titleElement.innerText;
-        var price = parseFloat(priceElement.innerText.replace('₹', ''));
-        var quantity = quantityElement.value;
-        var imgSrc = imgElement.src;
-        var status = cartBox.querySelector('.cart-status').value; // Get status from hidden input
+        let title = titleElement.innerText;
+        let price = parseFloat(priceElement.innerText.replace('₹', ''));
+        let quantity = quantityElement.value;
+        let imgSrc = imgElement.src;
+        let status = cartBox.querySelector('.cart-status').value;
 
         orderedItems.push({
             title: title,
             price: price,
             quantity: quantity,
             imgSrc: imgSrc,
-            status: parseInt(status) // Ensure status is an integer
+            status: parseInt(status)
         });
     }
 
@@ -99,13 +117,13 @@ function getOrderedItems() {
 }
 
 function removeCartItems(event) {
-    var buttonClicked = event.target;
+    let buttonClicked = event.target;
     buttonClicked.parentElement.remove();
     updateTotal();
 }
 
 function quantityChanged(event) {
-    var input = event.target;
+    let input = event.target;
     if (isNaN(input.value) || input.value <= 0) {
         input.value = 1;
     }
@@ -113,99 +131,89 @@ function quantityChanged(event) {
 }
 
 function addCartClicked(event) {
-    var button = event.target;
-    var shopProducts = button.parentElement;
-    var title = shopProducts.getElementsByClassName('product-title')[0].innerText;
-    var price = shopProducts.getElementsByClassName('price')[0].innerText;
-    var productImg = shopProducts.getElementsByClassName('product-img')[0].src;
-    var status = 0; // Default status
+    let button = event.target;
+    let shopProducts = button.parentElement;
+    let title = shopProducts.getElementsByClassName('product-title')[0].innerText;
+    let price = shopProducts.getElementsByClassName('price')[0].innerText;
+    let productImg = shopProducts.getElementsByClassName('product-img')[0].src;
+    let status = 0;
 
-    // Prompt for quantity
-    var quantity = prompt("Enter quantity:");
+    let quantity = prompt("Enter quantity:");
     if (quantity !== null && quantity !== "") {
-        // Add the product to the cart
         addProductToCart(title, price, productImg, status, quantity);
         updateTotal();
     }
 }
 
 function addProductToCart(title, price, productImg, status, quantity) {
-    var cartShopBox = document.createElement('div');
+    let cartShopBox = document.createElement('div');
     cartShopBox.classList.add('cart-box');
-    var cartItems = document.getElementsByClassName('cart-content')[0];
-    var cartItemsNames = cartItems.getElementsByClassName('cart-product-title');
+    let cartItems = document.getElementsByClassName('cart-content')[0];
+    let cartItemsNames = cartItems.getElementsByClassName('cart-product-title');
 
     for (let i = 0; i < cartItemsNames.length; i++) {
-        if (cartItemsNames[i].innerText == title) {
+        if (cartItemsNames[i].innerText === title) {
             alert("This item is already added to the cart.");
             return;
         }
     }
 
-// Define the changeQuantity function
-function changeQuantity(inputElement, delta) {
-    // Get the current value and parse it as a number
-    var currentValue = parseInt(inputElement.value);
-    // Add the delta to the current value
-    var newValue = currentValue + delta;
-    // Make sure the new value is within bounds (assuming a minimum quantity of 1)
-    if (newValue < 1) {
-        newValue = 1;
-    }
-    // Update the input element with the new value
-    inputElement.value = newValue;
-    updateTotal()
-}
-
-
-// Now you can use the cartBoxContent template literal
-var cartBoxContent = `
-    <img src="${productImg}" alt="" class="cart-img">
-    <div class="detail-box">
-        <div class="cart-product-title">${title}</div>
-        <div class="cart-price">${price}</div>
-        <div class="quantity-controls">
-            <button class="quantity-btn minus" style="padding: 5px 10px; border: none; background-color: #FF847C; cursor: pointer; box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2); border-radius:20px; scale:1;">-</button>
-            <input type="number" value="${quantity}" class="cart-quantity" style="width: 50px; text-align: center; scale:1.1; margin:3px;">
-            <button class="quantity-btn plus" style="padding: 5px 10px; border: none; background-color: #70C1B3; cursor: pointer; box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2); border-radius:20px; scale:1;">+</button>
+    let cartBoxContent = `
+        <img src="${productImg}" alt="" class="cart-img">
+        <div class="detail-box">
+            <div class="cart-product-title">${title}</div>
+            <div class="cart-price">${price}</div>
+            <div class="quantity-controls">
+                <button class="quantity-btn minus" style="padding: 5px 10px; border: none; background-color: #FF847C; cursor: pointer; box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2); border-radius:20px; scale:1;">-</button>
+                <input type="number" value="${quantity}" class="cart-quantity" style="width: 50px; text-align: center; scale:1.1; margin:3px;">
+                <button class="quantity-btn plus" style="padding: 5px 10px; border: none; background-color: #70C1B3; cursor: pointer; box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2); border-radius:20px; scale:1;">+</button>
+            </div>
         </div>
-    </div>
-    <i class='bx bxs-trash-alt cart-remove'></i>
-    <input type="hidden" value="${status}" class="cart-status">
-`;
-
-// Now, select the plus and minus buttons and attach event listeners dynamically
-document.addEventListener('click', function(event) {
-    if (event.target.classList.contains('quantity-btn')) {
-        var button = event.target;
-        var inputElement = button.parentNode.querySelector('.cart-quantity');
-        var delta = button.classList.contains('plus') ? 1 : -1;
-        changeQuantity(inputElement, delta);
-    }
-    updateTotal()
-});
-
-    
+        <i class='bx bxs-trash-alt cart-remove'></i>
+        <input type="hidden" value="${status}" class="cart-status">
+    `;
 
     cartShopBox.innerHTML = cartBoxContent;
     cartItems.append(cartShopBox);
 
     cartShopBox.getElementsByClassName('cart-remove')[0].addEventListener('click', removeCartItems);
     cartShopBox.getElementsByClassName('cart-quantity')[0].addEventListener('change', quantityChanged);
+    cartShopBox.getElementsByClassName('plus')[0].addEventListener('click', plus);
+    cartShopBox.getElementsByClassName('minus')[0].addEventListener('click', minus);
+}
+
+
+function plus(event) {
+    let button = event.target;
+    let input = button.parentElement.getElementsByClassName('cart-quantity')[0];
+    input.value = parseInt(input.value) + 1;
+    updateTotal();
+}
+
+
+function minus(event) {
+    let button = event.target;
+    let input = button.parentElement.getElementsByClassName('cart-quantity')[0];
+    if (input.value > 1) {
+        input.value = parseInt(input.value) - 1;
+        updateTotal();
+    }
 }
 
 function updateTotal() {
-    var cartContent = document.getElementsByClassName('cart-content')[0];
-    var cartBoxes = cartContent.getElementsByClassName('cart-box');
-    var total = 0;
+    let cartContent = document.getElementsByClassName('cart-content')[0];
+    let cartBoxes = cartContent.getElementsByClassName('cart-box');
+    let total = 0;
+
     for (let i = 0; i < cartBoxes.length; i++) {
-        var cartBox = cartBoxes[i];
-        var priceElement = cartBox.getElementsByClassName('cart-price')[0];
-        var quantityElement = cartBox.getElementsByClassName('cart-quantity')[0];
-        var price = parseFloat(priceElement.innerText.replace('₹', ''));
-        var quantity = quantityElement.value;
+        let cartBox = cartBoxes[i];
+        let priceElement = cartBox.getElementsByClassName('cart-price')[0];
+        let quantityElement = cartBox.getElementsByClassName('cart-quantity')[0];
+        let price = parseFloat(priceElement.innerText.replace('₹', ''));
+        let quantity = quantityElement.value;
         total += price * quantity;
     }
+
     total = Math.round(total * 100) / 100;
     document.getElementsByClassName('total-price')[0].innerText = `₹${total}`;
 }

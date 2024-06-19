@@ -15,8 +15,6 @@ const app = express();
 
 // Connect to MongoDB
 mongoose.connect('mongodb+srv://sahildhillon609:Sahil180@hr12.reguy9v.mongodb.net/db4', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
 });
 
 const db = mongoose.connection;

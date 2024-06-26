@@ -10,6 +10,7 @@ const createError = require('http-errors');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const orderRouter = require('./routes/order');
+const otpRouter = require('./routes/otp');
 
 const app = express();
 
@@ -29,7 +30,8 @@ const itemSchema = new mongoose.Schema({
     price: Number,
     quantity: Number,
     imgSrc: String,
-    status: Number
+    status: Number,
+    mobile: Number
 });
 
 const Item = mongoose.models.Item || mongoose.model('Item', itemSchema);
@@ -80,13 +82,31 @@ app.put('/items/:id', async (req, res) => {
     }
 });
 
+// Update the route to handle POST requests
+app.post('/otp', async (req, res) => {
+    const { mobile } = req.body;
+    await otpRouter.send_otp_to_mobile(mobile);
+    res.json({ message: 'OTP sent successfully' });
+});
+
+app.post('/verifyOtp', async (req, res) => {
+    const { mobile, otp } = req.body;
+    const isValid = await otpRouter.validate_otp_code(mobile, otp);
+    if (isValid) {
+        res.json({ message: 'OTP verified successfully' });
+    } else {
+        res.status(400).json({ message: 'OTP verification failed' });
+    }
+});
+
+
 // Catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     next(createError(404));
 });
 
 // Error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
     // Set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};

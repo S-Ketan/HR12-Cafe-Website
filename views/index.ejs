@@ -26,10 +26,12 @@ s
                 <p>Please enter your phone number for verification:</p>
                 <input type="text" id="phoneNumber" placeholder="Enter phone number">
                 <button id="verifyNumber" type="button">Send OTP</button>
-                <div id="otpSection" style="display: none;">
+                <div id="otpSection">
                     <p>Enter the OTP sent to your Number:</p>
                     <input type="text" id="otp" placeholder="Enter OTP" style=" padding: 6px;">
-                    <button id="verifyOtp" type="button" style="
+                    <button id="verifyOtp" type="button" 
+                    onclick="verifyOtp()"
+                    style="
     background-color: #4CAF50;
     border: none;
     color: white;

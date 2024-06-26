@@ -77,9 +77,6 @@ header{
   font-weight: bold;
 }
 
-#otpSection{
-  display: none;
-}
 
 .close:hover,
 .close:focus {

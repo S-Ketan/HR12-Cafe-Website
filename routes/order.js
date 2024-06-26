@@ -12,7 +12,8 @@ const itemSchema = new mongoose.Schema({
     quantity: Number,
     imgSrc: String,
     status: Number,
-    createdAt: { type: Date, default: Date.now }
+    createdAt: { type: Date, default: Date.now },
+    mobile: Number
 });
 
 

@@ -1,4 +1,3 @@
-
 let cartIcon = document.querySelector('#cart-icon');
 let cart = document.querySelector('.cart');
 let closeCart = document.querySelector('#close-btn');
@@ -52,43 +51,110 @@ function buyButtonClicked() {
     numberModal.style.display = 'block';
 }
 
-function verifyNumber() {
+async function verifyNumber() {
     let phoneNumber = phoneNumberInput.value.trim();
+
+    // Validate phone number format
     if (phoneNumber === "" || !/^\d{10}$/.test(phoneNumber)) {
         alert('Please enter a valid 10-digit phone number.');
         return;
     }
 
-    alert('Order Placed');
-    let cartContent = document.getElementsByClassName('cart-content')[0];
-    let orderedItems = getOrderedItems();
-    console.log('Ordered Items:', JSON.stringify(orderedItems, null, 2)); 
+    console.log('Verifying phone number:', phoneNumber);
 
-    fetch('/order', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(orderedItems),
-    })
-    .then(response => response.text())
-    .then(data => {
-        console.log('Response from server:', data);
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-    });
+    try {
+        const response = await fetch('/otp', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ mobile: phoneNumber }),
+        });
 
-    while (cartContent.hasChildNodes()) {
-        cartContent.removeChild(cartContent.firstChild);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        console.log('Server response:', data);
+        // Assuming OTP verification logic goes here
+        // Display OTP modal or continue with next steps
+    } catch (error) {
+        console.error('Failed to fetch:', error);
+        alert('There was a problem with your fetch operation: ' + error.message);
     }
-    updateTotal();
+}
+
+
+
+async function verifyOtp() {
+    let phoneNumber = phoneNumberInput.value.trim();
+    let otp = document.getElementById('otp').value.trim();
+
+    try {
+        const response = await fetch('/verifyOtp', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ mobile: phoneNumber, otp }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        console.log('Server response:', data);
+        if (data.message !== 'OTP verified successfully') {
+            throw new Error('OTP verification failed');
+        }
+
+        // logic that needs to be executed after successful verification
+        alert('Order Placed');
+        let cartContent = document.getElementsByClassName('cart-content')[0];
+        let orderedItems = getOrderedItems();
+        console.log('Ordered Items:', JSON.stringify(orderedItems, null, 2));
+
+        fetch('/order', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(orderedItems),
+        })
+            .then(response => response.text())
+            .then(data => {
+                console.log('Response from server:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
+        while (cartContent.hasChildNodes()) {
+            cartContent.removeChild(cartContent.firstChild);
+        }
+        updateTotal();
+
+
+        // Assuming OTP verification logic goes here
+        // Display OTP modal or continue with next steps
+    } catch (error) {
+        console.error('Failed to fetch:', error);
+        alert('There was a problem with your fetch operation: ' + error.message);
+    }
+
+
+
+
+
 }
 
 function getOrderedItems() {
     let cartItems = document.getElementsByClassName('cart-content')[0];
     let cartBoxes = cartItems.getElementsByClassName('cart-box');
     let orderedItems = [];
+    let phoneNumber = document.getElementById('phoneNumber').value; // Fetch the phone number once
 
     for (let i = 0; i < cartBoxes.length; i++) {
         let cartBox = cartBoxes[i];
@@ -96,19 +162,20 @@ function getOrderedItems() {
         let priceElement = cartBox.getElementsByClassName('cart-price')[0];
         let quantityElement = cartBox.getElementsByClassName('cart-quantity')[0];
         let imgElement = cartBox.getElementsByClassName('cart-img')[0];
+        let status = cartBox.querySelector('.cart-status').value;
 
         let title = titleElement.innerText;
         let price = parseFloat(priceElement.innerText.replace('₹', ''));
         let quantity = quantityElement.value;
         let imgSrc = imgElement.src;
-        let status = cartBox.querySelector('.cart-status').value;
 
         orderedItems.push({
             title: title,
             price: price,
             quantity: quantity,
             imgSrc: imgSrc,
-            status: parseInt(status)
+            status: parseInt(status),
+            mobile: phoneNumber // Use the fetched phone number
         });
     }
 

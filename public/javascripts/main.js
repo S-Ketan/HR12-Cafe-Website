@@ -7,6 +7,7 @@ let verifyButton = document.getElementById('verifyNumber');
 let phoneNumberInput = document.getElementById('phoneNumber');
 let otp = document.getElementById(`#otpSection`);
 
+
 cartIcon.onclick = () => {
     cart.classList.add('active');
 };
@@ -76,9 +77,17 @@ async function verifyNumber() {
         }
 
         const data = await response.json();
-        console.log('Server response:', data);
-        // Assuming OTP verification logic goes here
+        console.log('Server response:', data.message);
+
+        if (data.message !== 'OTP sent successfully') {
+            document.getElementById('verifyNumber').style.display = 'block';
+        }
+
         // Display OTP modal or continue with next steps
+        alert('OTP sent successfully');
+        document.getElementById('verifyNumber').style.display = 'none';
+
+
     } catch (error) {
         console.error('Failed to fetch:', error);
         alert('There was a problem with your fetch operation: ' + error.message);
@@ -105,7 +114,7 @@ async function verifyOtp() {
         }
 
         const data = await response.json();
-        console.log('Server response:', data);
+        console.log('Server response:', data.message);
         if (data.message !== 'OTP verified successfully') {
             throw new Error('OTP verification failed');
         }
@@ -114,7 +123,7 @@ async function verifyOtp() {
         alert('Order Placed');
         let cartContent = document.getElementsByClassName('cart-content')[0];
         let orderedItems = getOrderedItems();
-        console.log('Ordered Items:', JSON.stringify(orderedItems, null, 2));
+        // console.log('Ordered Items:', JSON.stringify(orderedItems, null, 2));
 
         fetch('/order', {
             method: 'POST',
@@ -179,7 +188,7 @@ function getOrderedItems() {
         });
     }
 
-    console.log('Collected ordered items:', orderedItems);
+    // console.log('Collected ordered items:', orderedItems);
     return orderedItems;
 }
 

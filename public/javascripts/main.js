@@ -144,6 +144,8 @@ async function verifyOtp() {
             cartContent.removeChild(cartContent.firstChild);
         }
         updateTotal();
+        window.location.reload();
+
 
 
         // Assuming OTP verification logic goes here

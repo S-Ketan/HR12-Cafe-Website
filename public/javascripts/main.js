@@ -145,11 +145,7 @@ async function verifyOtp() {
         }
         updateTotal();
         window.location.reload();
-
-
-
-        // Assuming OTP verification logic goes here
-        // Display OTP modal or continue with next steps
+        
     } catch (error) {
         console.error('Failed to fetch:', error);
         alert('There was a problem with your fetch operation: ' + error.message);

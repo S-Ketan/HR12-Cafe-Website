@@ -31,7 +31,8 @@ const itemSchema = new mongoose.Schema({
     quantity: Number,
     imgSrc: String,
     status: Number,
-    mobile: Number
+    mobile: Number,
+    name: String
 });
 
 const Item = mongoose.models.Item || mongoose.model('Item', itemSchema);

@@ -80,11 +80,11 @@
                             <img style="width: 150px; height: 200px; padding:10px; border-radius:20px;" src="${item.imgSrc}" alt="${item.title}">
                             <div style="margin-left: 1rem; padding-top:rem; font-size:1.3rem;">
                                 <h3 style="margin: 2px;">${item.title}</h3>
+                                <p style="margin: 2px;">Name: <span id="status-${item._id}">${item.name}</span></p>
+                                <p style="margin: 2px;">Phone: ${item.mobile}</p>
                                 <p style="margin: 2px;">Price: ₹${item.price}</p>
                                 <p style="margin: 2px;">Quantity: ${item.quantity}</p>
-                                <p style="margin: 2px;">Phone: ${item.mobile}</p>
                                 <p style="margin: 2px;">Total: ₹${total}</p>
-                                <p style="margin: 2px;">Status: <span id="status-${item._id}">${item.status}</span></p>
                             </div>
                         </div>
                         <div style="position: absolute; bottom: 5px; right: 5px;">

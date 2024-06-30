@@ -13,7 +13,8 @@ const itemSchema = new mongoose.Schema({
     imgSrc: String,
     status: Number,
     createdAt: { type: Date, default: Date.now },
-    mobile: Number
+    mobile: Number,
+    name: String
 });
 
 

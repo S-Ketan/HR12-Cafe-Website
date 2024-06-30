@@ -35,6 +35,13 @@ function ready() {
         button.addEventListener('click', addCartClicked);
     }
 
+
+    let addCartSize = document.getElementsByClassName('add-cart-size');
+    for (let i = 0; i < addCartSize.length; i++) {
+        const button = addCartSize[i];
+        button.addEventListener('click', addCartSizeClicked);
+    }
+
     document.getElementsByClassName('btn-buy')[0].addEventListener('click', buyButtonClicked);
 
     verifyButton.addEventListener('click', verifyNumber);
@@ -53,7 +60,13 @@ function buyButtonClicked() {
 }
 
 async function verifyNumber() {
+    let name = document.getElementById('name').value.trim();
     let phoneNumber = phoneNumberInput.value.trim();
+
+    if(name === ""){
+        alert('Please enter your name');
+        return;
+    }
 
     // Validate phone number format
     if (phoneNumber === "" || !/^\d{10}$/.test(phoneNumber)) {
@@ -97,6 +110,7 @@ async function verifyNumber() {
 
 
 async function verifyOtp() {
+    let name = document.getElementById('name').value.trim();
     let phoneNumber = phoneNumberInput.value.trim();
     let otp = document.getElementById('otp').value.trim();
 
@@ -162,6 +176,7 @@ function getOrderedItems() {
     let cartBoxes = cartItems.getElementsByClassName('cart-box');
     let orderedItems = [];
     let phoneNumber = document.getElementById('phoneNumber').value; // Fetch the phone number once
+    let name = document.getElementById('name').value;
 
     for (let i = 0; i < cartBoxes.length; i++) {
         let cartBox = cartBoxes[i];
@@ -182,7 +197,8 @@ function getOrderedItems() {
             quantity: quantity,
             imgSrc: imgSrc,
             status: parseInt(status),
-            mobile: phoneNumber // Use the fetched phone number
+            mobile: phoneNumber,
+            name: name
         });
     }
 
@@ -202,6 +218,10 @@ function quantityChanged(event) {
         input.value = 1;
     }
     updateTotal();
+}
+
+function addCartSizeClicked() {
+    console.log("clicked");
 }
 
 function addCartClicked(event) {
@@ -291,3 +311,33 @@ function updateTotal() {
     total = Math.round(total * 100) / 100;
     document.getElementsByClassName('total-price')[0].innerText = `₹${total}`;
 }
+
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    const openPopupBtn = document.getElementById('openPopupBtn');
+    const popup = document.getElementById('popup');
+    const closeBtn = document.querySelector('.close');
+    const sizeButtons = document.querySelectorAll('.size-btn');
+
+    openPopupBtn.addEventListener('click', () => {
+        popup.style.display = 'block';
+    });
+
+    closeBtn.addEventListener('click', () => {
+        popup.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target == popup) {
+            popup.style.display = 'none';
+        }
+    });
+
+    sizeButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            const selectedSize = event.target.getAttribute('data-size');
+            alert('You selected: ' + selectedSize);
+            popup.style.display = 'none';
+        });
+    });
+});

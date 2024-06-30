@@ -237,7 +237,7 @@ function addCartClicked(parentEvent) {
 
     if (parentEvent.target.getAttribute('att') == "1") {
         popup.style.display = 'block';
-    }else{
+    } else {
         updateSize(parentEvent);
     }
 
@@ -254,20 +254,31 @@ function addCartClicked(parentEvent) {
 
 }
 
-function updateSize(event,selectedSize){
+function updateSize(event, selectedSize) {
+    let addPrice = 0;
     let button = event.target;
     console.log(button);
     let shopProducts = button.parentElement;
     let title = shopProducts.getElementsByClassName('product-title')[0].innerText + `${selectedSize ? `[${selectedSize}]` : ''}`;
-    let price = shopProducts.getElementsByClassName('price')[0].innerText;
+    if (selectedSize === 'large') {
+        addPrice = 240;
+    } else if (selectedSize === 'medium') {
+        addPrice = 110;
+    } else {
+        addPrice = 0;
+    }
+    let priceText = shopProducts.getElementsByClassName('price')[0].innerText;
+    priceText = priceText.replace(/[^\d]/g, ''); 
+    let price = parseInt(priceText) + addPrice;
+
     let productImg = shopProducts.getElementsByClassName('product-img')[0].src;
     let status = 0;
 
     let quantity = prompt("Enter quantity:");
-            if (quantity !== null && quantity !== "") {
-                addProductToCart(title, price, productImg, status, quantity);
-                updateTotal();
-            }
+    if (quantity !== null && quantity !== "") {
+        addProductToCart(title, price, productImg, status, quantity);
+        updateTotal();
+    }
 }
 
 function addProductToCart(title, price, productImg, status, quantity) {

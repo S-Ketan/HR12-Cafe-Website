@@ -36,12 +36,6 @@ function ready() {
     }
 
 
-    let addCartSize = document.getElementsByClassName('add-cart-size');
-    for (let i = 0; i < addCartSize.length; i++) {
-        const button = addCartSize[i];
-        button.addEventListener('click', addCartSizeClicked);
-    }
-
     document.getElementsByClassName('btn-buy')[0].addEventListener('click', buyButtonClicked);
 
     verifyButton.addEventListener('click', verifyNumber);
@@ -63,7 +57,7 @@ async function verifyNumber() {
     let name = document.getElementById('name').value.trim();
     let phoneNumber = phoneNumberInput.value.trim();
 
-    if(name === ""){
+    if (name === "") {
         alert('Please enter your name');
         return;
     }
@@ -159,7 +153,7 @@ async function verifyOtp() {
         }
         updateTotal();
         window.location.reload();
-        
+
     } catch (error) {
         console.error('Failed to fetch:', error);
         alert('There was a problem with your fetch operation: ' + error.message);
@@ -224,19 +218,56 @@ function addCartSizeClicked() {
     console.log("clicked");
 }
 
-function addCartClicked(event) {
+function addCartClicked(parentEvent) {
+    let selectedSize = "";
+    const popup = document.getElementById('popup');
+    const closeBtn = document.querySelector('.close');
+    const sizeButtons = document.querySelectorAll('.size-btn');
+
+    for (let i = 0; i < sizeButtons.length; i++) {
+        console.log("working");
+        sizeButtons[i].addEventListener('click', (event) => {
+            selectedSize = event.target.getAttribute('data-size');
+            console.log('You selected: ' + selectedSize);
+            popup.style.display = 'none';
+            updateSize(parentEvent, selectedSize);
+        });
+    }
+
+
+    if (parentEvent.target.getAttribute('att') == "1") {
+        popup.style.display = 'block';
+    }else{
+        updateSize(parentEvent);
+    }
+
+    closeBtn.addEventListener('click', () => {
+        popup.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+        if (parentEvent.target == popup) {
+            popup.style.display = 'none';
+        }
+    });
+
+
+}
+
+function updateSize(event,selectedSize){
     let button = event.target;
+    console.log(button);
     let shopProducts = button.parentElement;
-    let title = shopProducts.getElementsByClassName('product-title')[0].innerText;
+    let title = shopProducts.getElementsByClassName('product-title')[0].innerText + `${selectedSize ? `[${selectedSize}]` : ''}`;
     let price = shopProducts.getElementsByClassName('price')[0].innerText;
     let productImg = shopProducts.getElementsByClassName('product-img')[0].src;
     let status = 0;
 
     let quantity = prompt("Enter quantity:");
-    if (quantity !== null && quantity !== "") {
-        addProductToCart(title, price, productImg, status, quantity);
-        updateTotal();
-    }
+            if (quantity !== null && quantity !== "") {
+                addProductToCart(title, price, productImg, status, quantity);
+                updateTotal();
+            }
 }
 
 function addProductToCart(title, price, productImg, status, quantity) {
@@ -313,31 +344,3 @@ function updateTotal() {
 }
 
 
-document.addEventListener('DOMContentLoaded', (event) => {
-    const openPopupBtn = document.getElementById('openPopupBtn');
-    const popup = document.getElementById('popup');
-    const closeBtn = document.querySelector('.close');
-    const sizeButtons = document.querySelectorAll('.size-btn');
-
-    openPopupBtn.addEventListener('click', () => {
-        popup.style.display = 'block';
-    });
-
-    closeBtn.addEventListener('click', () => {
-        popup.style.display = 'none';
-    });
-
-    window.addEventListener('click', (event) => {
-        if (event.target == popup) {
-            popup.style.display = 'none';
-        }
-    });
-
-    sizeButtons.forEach(button => {
-        button.addEventListener('click', (event) => {
-            const selectedSize = event.target.getAttribute('data-size');
-            alert('You selected: ' + selectedSize);
-            popup.style.display = 'none';
-        });
-    });
-});

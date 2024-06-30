@@ -11,56 +11,56 @@ HR12
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
         rel="stylesheet">
 
-        <style>
-            #openPopupBtn {
-                padding: 10px 20px;
-                font-size: 16px;
-                cursor: pointer;
-            }
-    
-            .popup {
-                display: none;
-                position: fixed;
-                z-index: 1;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
-                overflow: auto;
-                background-color: rgba(0,0,0,0.4);
-            }
-    
-            .popup-content {
-                background-color: #fefefe;
-                margin: 15% auto;
-                padding: 20px;
-                border: 1px solid #888;
-                width: 80%;
-                max-width: 400px;
-                text-align: center;
-            }
-    
-            .close {
-                color: #aaa;
-                float: right;
-                font-size: 28px;
-                font-weight: bold;
-            }
-    
-            .close:hover,
-            .close:focus {
-                color: black;
-                text-decoration: none;
-                cursor: pointer;
-            }
-    
-            .size-btn {
-                margin: 10px;
-                padding: 10px 20px;
-                font-size: 16px;
-                cursor: pointer;
-            }
-        </style>
+    <style>
+        #openPopupBtn {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .popup-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .size-btn {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <link rel="stylesheet" href="./stylesheets/style.css">
@@ -70,15 +70,15 @@ HR12
 <body>
     <header>
 
-    <div id="popup" class="popup">
-        <div class="popup-content">
-            <span class="close">&times;</span>
-            <h2>Select Size</h2>
-            <button class="size-btn" data-size="small">Small</button>
-            <button class="size-btn" data-size="medium">Medium</button>
-            <button class="size-btn" data-size="large">Large</button>
+        <div id="popup" class="popup">
+            <div class="popup-content">
+                <span class="close">&times;</span>
+                <h2>Select Size</h2>
+                <button class="size-btn" data-size="small">Small</button>
+                <button class="size-btn" data-size="medium">Medium</button>
+                <button class="size-btn" data-size="large">Large</button>
+            </div>
         </div>
-    </div>
 
         <div id="numberModal" class="modal">
             <div class="modal-content">
@@ -540,6 +540,204 @@ HR12
                 <img src="../images/Brownie.jpeg" alt="" class="product-img">
                 <h2 class="product-title">Choa Pizza</h2>
                 <span class="price">₹69</span>
+                <span class='add-cart' att="1" id="openPopupBtn"> Add to Cart</span>
+            </div>
+        </div>
+        <div class="Achi_si" id="Deserts"
+            style="margin-top: 1.5rem; margin-bottom: 1.5rem; text-align: center; font-size: 1.3rem; font-weight: 500;  ; box-shadow: 2px 0 4px hsl(0 4% 15% / 10%);">
+            ----------Wraps----------</div>
+
+        <div class="shop-content">
+            <div class="product-box">
+                <img src="../images/Brownie.jpeg" alt="" class="product-img">
+                <h2 class="product-title">Aloo Tikki</h2>
+                <span class="price">₹69</span>
+                <span class='add-cart' att="1" id="openPopupBtn"> Add to Cart</span>
+            </div>
+            <div class="product-box">
+                <img src="../images/Brownie.jpeg" alt="" class="product-img">
+                <h2 class="product-title">Mexican</h2>
+                <span class="price">₹89</span>
+                <span class='add-cart' att="1" id="openPopupBtn"> Add to Cart</span>
+            </div>
+            <div class="product-box">
+                <img src="../images/Brownie.jpeg" alt="" class="product-img">
+                <h2 class="product-title">Paneer</h2>
+                <span class="price">₹99</span>
+                <span class='add-cart' att="1" id="openPopupBtn"> Add to Cart</span>
+            </div>
+            <div class="product-box">
+                <img src="../images/Brownie.jpeg" alt="" class="product-img">
+                <h2 class="product-title">Spicy Wraps</h2>
+                <span class="price">₹99</span>
+                <span class='add-cart' att="1" id="openPopupBtn"> Add to Cart</span>
+            </div>
+        </div>
+        <div class="Achi_si" id="Deserts"
+            style="margin-top: 1.5rem; margin-bottom: 1.5rem; text-align: center; font-size: 1.3rem; font-weight: 500;  ; box-shadow: 2px 0 4px hsl(0 4% 15% / 10%);">
+            ----------Calzones----------</div>
+
+        <div class="shop-content">
+            <div class="product-box">
+                <img src="../images/Brownie.jpeg" alt="" class="product-img">
+                <h2 class="product-title">Cheese Calzones</h2>
+                <span class="price">₹99</span>
+                <span class='add-cart' att="1" id="openPopupBtn"> Add to Cart</span>
+            </div>
+            <div class="product-box">
+                <img src="../images/Brownie.jpeg" alt="" class="product-img">
+                <h2 class="product-title">Spicy Calzones</h2>
+                <span class="price">₹109</span>
+                <span class='add-cart' att="1" id="openPopupBtn"> Add to Cart</span>
+            </div>
+            <div class="product-box">
+                <img src="../images/Brownie.jpeg" alt="" class="product-img">
+                <h2 class="product-title">Mexican Calzonesr</h2>
+                <span class="price">₹119</span>
+                <span class='add-cart' att="1" id="openPopupBtn"> Add to Cart</span>
+            </div>
+            <div class="product-box">
+                <img src="../images/Brownie.jpeg" alt="" class="product-img">
+                <h2 class="product-title">Stuff Calzones</h2>
+                <span class="price">₹160</span>
+                <span class='add-cart' att="1" id="openPopupBtn"> Add to Cart</span>
+            </div>
+        </div>
+        <div class="Achi_si" id="Deserts"
+            style="margin-top: 1.5rem; margin-bottom: 1.5rem; text-align: center; font-size: 1.3rem; font-weight: 500;  ; box-shadow: 2px 0 4px hsl(0 4% 15% / 10%);">
+            ----------Garlic Bread----------</div>
+
+        <div class="shop-content">
+            <div class="product-box">
+                <img src="../images/Brownie.jpeg" alt="" class="product-img">
+                <h2 class="product-title">Cheese Garlic Bread</h2>
+                <span class="price">₹99</span>
+                <span class='add-cart' att="1" id="openPopupBtn"> Add to Cart</span>
+            </div>
+            <div class="product-box">
+                <img src="../images/Brownie.jpeg" alt="" class="product-img">
+                <h2 class="product-title">Jalapeno Garlic Bread</h2>
+                <span class="price">₹110</span>
+                <span class='add-cart' att="1" id="openPopupBtn"> Add to Cart</span>
+            </div>
+            <div class="product-box">
+                <img src="../images/Brownie.jpeg" alt="" class="product-img">
+                <h2 class="product-title">Stuffed Garlic Bread</h2>
+                <span class="price">₹140</span>
+                <span class='add-cart' att="1" id="openPopupBtn"> Add to Cart</span>
+            </div>
+        </div>
+        <div class="Achi_si" id="Deserts"
+            style="margin-top: 1.5rem; margin-bottom: 1.5rem; text-align: center; font-size: 1.3rem; font-weight: 500;  ; box-shadow: 2px 0 4px hsl(0 4% 15% / 10%);">
+            ----------Pizza Pie----------</div>
+
+        <div class="shop-content">
+            <div class="product-box">
+                <img src="../images/Brownie.jpeg" alt="" class="product-img">
+                <h2 class="product-title">Combo 1st Pizza Pie</h2>
+                <span class="price">₹249</span>
+                <span class='add-cart' att="1" id="openPopupBtn"> Add to Cart</span>
+            </div>
+            <div class="product-box">
+                <img src="../images/Brownie.jpeg" alt="" class="product-img">
+                <h2 class="product-title">Tomato</h2>
+                <span class="price">₹69</span>
+                <span class='add-cart' att="1" id="openPopupBtn"> Add to Cart</span>
+            </div>
+            <div class="product-box">
+                <img src="../images/Brownie.jpeg" alt="" class="product-img">
+                <h2 class="product-title">Onion</h2>
+                <span class="price">₹70</span>
+                <span class='add-cart' att="1" id="openPopupBtn"> Add to Cart</span>
+            </div>
+            <div class="product-box">
+                <img src="../images/Brownie.jpeg" alt="" class="product-img">
+                <h2 class="product-title">Capsicum</h2>
+                <span class="price">₹70</span>
+                <span class='add-cart' att="1" id="openPopupBtn"> Add to Cart</span>
+            </div>
+            <div class="product-box">
+                <img src="../images/Brownie.jpeg" alt="" class="product-img">
+                <h2 class="product-title">Golden Corn</h2>
+                <span class="price">₹70</span>
+                <span class='add-cart' att="1" id="openPopupBtn"> Add to Cart</span>
+            </div>
+            <div class="product-box">
+                <img src="../images/Brownie.jpeg" alt="" class="product-img">
+                <h2 class="product-title">Combo 2nd Pizza Pie</h2>
+                <span class="price">₹390</span>
+                <span class='add-cart' att="1" id="openPopupBtn"> Add to Cart</span>
+            </div>
+            <div class="product-box">
+                <img src="../images/Brownie.jpeg" alt="" class="product-img">
+                <h2 class="product-title">Paneer</h2>
+                <span class="price">₹100</span>
+                <span class='add-cart' att="1" id="openPopupBtn"> Add to Cart</span>
+            </div>
+            <div class="product-box">
+                <img src="../images/Brownie.jpeg" alt="" class="product-img">
+                <h2 class="product-title">Mushroom</h2>
+                <span class="price">₹80</span>
+                <span class='add-cart' att="1" id="openPopupBtn"> Add to Cart</span>
+            </div>
+            <div class="product-box">
+                <img src="../images/Brownie.jpeg" alt="" class="product-img">
+                <h2 class="product-title">Red Peprica</h2>
+                <span class="price">₹80</span>
+                <span class='add-cart' att="1" id="openPopupBtn"> Add to Cart</span>
+            </div>
+            <div class="product-box">
+                <img src="../images/Brownie.jpeg" alt="" class="product-img">
+                <h2 class="product-title">Jalapeno</h2>
+                <span class="price">₹80</span>
+                <span class='add-cart' att="1" id="openPopupBtn"> Add to Cart</span>
+            </div>
+            <div class="product-box">
+                <img src="../images/Brownie.jpeg" alt="" class="product-img">
+                <h2 class="product-title">Soyabean</h2>
+                <span class="price">₹80</span>
+                <span class='add-cart' att="1" id="openPopupBtn"> Add to Cart</span>
+            </div>
+            <div class="product-box">
+                <img src="../images/Brownie.jpeg" alt="" class="product-img">
+                <h2 class="product-title">Pineapple</h2>
+                <span class="price">₹80</span>
+                <span class='add-cart' att="1" id="openPopupBtn"> Add to Cart</span>
+            </div>
+        </div>
+        <div class="Achi_si" id="Deserts"
+            style="margin-top: 1.5rem; margin-bottom: 1.5rem; text-align: center; font-size: 1.3rem; font-weight: 500;  ; box-shadow: 2px 0 4px hsl(0 4% 15% / 10%);">
+            ----------Ultimate Pizza Pie----------</div>
+
+        <div class="shop-content">
+            <div class="product-box">
+                <img src="../images/Brownie.jpeg" alt="" class="product-img">
+                <h2 class="product-title">Spicy Journey</h2>
+                <span class="price">₹129</span>
+                <span class='add-cart' att="1" id="openPopupBtn"> Add to Cart</span>
+            </div>
+            <div class="product-box">
+                <img src="../images/Brownie.jpeg" alt="" class="product-img">
+                <h2 class="product-title">Doodle woodle</h2>
+                <span class="price">₹129</span>
+                <span class='add-cart' att="1" id="openPopupBtn"> Add to Cart</span>
+            </div>
+            <div class="product-box">
+                <img src="../images/Brownie.jpeg" alt="" class="product-img">
+                <h2 class="product-title">On the Track</h2>
+                <span class="price">₹129</span>
+                <span class='add-cart' att="1" id="openPopupBtn"> Add to Cart</span>
+            </div>
+            <div class="product-box">
+                <img src="../images/Brownie.jpeg" alt="" class="product-img">
+                <h2 class="product-title">Loaded Cheese</h2>
+                <span class="price">₹129</span>
+                <span class='add-cart' att="1" id="openPopupBtn"> Add to Cart</span>
+            </div>
+            <div class="product-box">
+                <img src="../images/Brownie.jpeg" alt="" class="product-img">
+                <h2 class="product-title">Sweet and Tangy Pie</h2>
+                <span class="price">₹129</span>
                 <span class='add-cart' att="1" id="openPopupBtn"> Add to Cart</span>
             </div>
         </div>

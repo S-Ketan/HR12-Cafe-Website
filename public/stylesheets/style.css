@@ -248,12 +248,12 @@ section{
 
 .mainMenu{
   display: flex;
-  gap: 3rem;
+  gap: 2rem;
 }
 
 .menuList{
   display: flex;
-  gap: 3rem;
+  gap: 2rem;
 }
 
 .menuList > a > li{

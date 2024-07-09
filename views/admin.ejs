@@ -15,14 +15,14 @@
 </head>
 
 <body>
-    <header role="banner" >
+    <header role="banner">
         <h1>HR12 Kitchen</h1>
         <ul class="utilities">
             <br>
         </ul>
     </header>
 
-    <nav role='navigation' >
+    <nav role='navigation'>
         <ul class="main">
             <li class="dashboard"><a href="#" id="recent-tab" onclick="filterItems(0)">Recent</a></li>
             <li class="dashboard"><a href="#" id="completed-tab" onclick="filterItems(1)">Completed</a></li>
@@ -38,151 +38,187 @@
     </main>
 
     <script>
-
+        
         setInterval(() => {
-            location.reload();
-        }, 10000);
+    location.reload();
+}, 10000);
 
-        document.addEventListener('DOMContentLoaded', () => {
-            fetchItems();
-        });
-    
-        let items = [];
-    
-        async function fetchItems() {
-            try {
-                const response = await fetch('/items?sort=-createdAt');
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+document.addEventListener('DOMContentLoaded', () => {
+    fetchItems();
+});
+
+let items = [];
+let previousOrderIds = JSON.parse(localStorage.getItem('orderIds')) || [];
+
+async function fetchItems() {
+    try {
+        const response = await fetch('/items?sort=-createdAt');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        items = await response.json();
+        
+        // Update orderIds with the fetched items' IDs
+        const orderIds = items.map(item => item._id);
+        
+        // Compare previousOrderIds with the current orderIds
+        const previousOrderIdsSet = new Set(previousOrderIds);
+        const orderIdsSet = new Set(orderIds);
+        
+        let newItems = false;
+        if (orderIds === previousOrderIds) {
+            newItems = false;
+        } else {
+            for (const id of orderIds) {
+                if (!previousOrderIdsSet.has(id)) {
+                    newItems = true;
+                    break;
                 }
-                items = await response.json();
-                // console.log('Fetched items:', items);
-                displayItems();
-            } catch (error) {
-                console.error('Error fetching items:', error);
             }
         }
-    
-        function displayItems() {
-            const recentItemsContainer = document.getElementById('recent-items-container');
-            const completedItemsContainer = document.getElementById('completed-items-container');
-    
-            recentItemsContainer.innerHTML = ''; // Clear any existing items
-            completedItemsContainer.innerHTML = ''; // Clear any existing items
-    
-            // Reverse the order of the items array
-            const reversedItems = items.slice().reverse();
-    
-            reversedItems.forEach(item => {
-                const itemElement = document.createElement('div');
-                itemElement.className = 'item';
-                const total = Math.round((item.price * item.quantity) * 100) / 100;
-                
-    
-                itemElement.innerHTML = `
-                    <div style="display:flex; border: 1px solid #666; scale:0.9; border-radius:10px; position: relative;">
-                        <div style="display:flex;">
-                            <img style="width: 150px; height: 200px; padding:10px; border-radius:20px;" src="${item.imgSrc}" alt="${item.title}">
-                            <div style="margin-left: 1rem; padding-top:rem; font-size:1.3rem;">
-                                <h3 style="margin: 2px;">${item.title}</h3>
-                                <p style="margin: 2px;">Name: <span id="status-${item._id}">${item.name}</span></p>
-                                <p style="margin: 2px;">Phone: ${item.mobile}</p>
-                                <p style="margin: 2px;">Price: ₹${item.price}</p>
-                                <p style="margin: 2px;">Quantity: ${item.quantity}</p>
-                                <p style="margin: 2px;">Total: ₹${total}</p>
-                            </div>
-                        </div>
-                        <div style="position: absolute; bottom: 5px; right: 5px;">
-                            <button style="background-color: #4CAF50; /* Green */
-                                border: none;
-                                color: white;
-                                padding: 10px 20px;
-                                text-align: center;
-                                text-decoration: none;
-                                display: inline-block;
-                                font-size: 16px;
-                                margin: 4px 2px;
-                                cursor: pointer;
-                                border-radius: 8px;
-                                transition-duration: 0.4s;"
-                                onclick="updateStatus('${item._id}', ${item.status})">Change Status
-                            </button>
-                        </div>
+
+        if (newItems) {
+            console.log("new items added");
+        } else {
+            console.log("no new items");
+        }
+
+        console.log(orderIds);
+
+        // Store the new orderIds in localStorage
+        localStorage.setItem('orderIds', JSON.stringify(orderIds));
+
+        // Update previousOrderIds
+        previousOrderIds = orderIds;
+
+        displayItems();
+    } catch (error) {
+        console.error('Error fetching items:', error);
+    }
+}
+
+function displayItems() {
+    const recentItemsContainer = document.getElementById('recent-items-container');
+    const completedItemsContainer = document.getElementById('completed-items-container');
+
+    recentItemsContainer.innerHTML = ''; // Clear any existing items
+    completedItemsContainer.innerHTML = ''; // Clear any existing items
+
+    // Reverse the order of the items array
+    const reversedItems = items.slice().reverse();
+
+    reversedItems.forEach(item => {
+        const itemElement = document.createElement('div');
+        itemElement.className = 'item';
+        const total = Math.round((item.price * item.quantity) * 100) / 100;
+
+        itemElement.innerHTML = `
+            <div style="display:flex; border: 1px solid #666; scale:0.9; border-radius:10px; position: relative;">
+                <div style="display:flex;">
+                    <img style="width: 150px; height: 200px; padding:10px; border-radius:20px;" src="${item.imgSrc}" alt="${item.title}">
+                    <div style="margin-left: 1rem; padding-top:rem; font-size:1.3rem;">
+                        <h3 style="margin: 2px;">${item.title}</h3>
+                        <p style="margin: 2px;">Name: <span id="status-${item._id}">${item.name}</span></p>
+                        <p style="margin: 2px;">Phone: ${item.mobile}</p>
+                        <p style="margin: 2px;">Price: ₹${item.price}</p>
+                        <p style="margin: 2px;">Quantity: ${item.quantity}</p>
+                        <p style="margin: 2px;">Total: ₹${total}</p>
                     </div>
-                `;
-    
-                if (item.status === 0) {
-                    recentItemsContainer.appendChild(itemElement);
-                } else if (item.status === 1) {
-                    completedItemsContainer.appendChild(itemElement);
-                }
-            });
-    
-            filterItems(0); // Set the initial tab to "Recent"
+                </div>
+                <div style="position: absolute; bottom: 5px; right: 5px;">
+                    <button style="background-color: #4CAF50; /* Green */
+                        border: none;
+                        color: white;
+                        padding: 10px 20px;
+                        text-align: center;
+                        text-decoration: none;
+                        display: inline-block;
+                        font-size: 16px;
+                        margin: 4px 2px;
+                        cursor: pointer;
+                        border-radius: 8px;
+                        transition-duration: 0.4s;"
+                        onclick="updateStatus('${item._id}', ${item.status})">Change Status
+                    </button>
+                </div>
+            </div>
+        `;
+
+        if (item.status === 0) {
+            recentItemsContainer.appendChild(itemElement);
+        } else if (item.status === 1) {
+            completedItemsContainer.appendChild(itemElement);
         }
-    
-        async function updateStatus(itemId, currentStatus) {
-            if (!itemId) {
-                console.error('Item ID is undefined');
-                return;
-            }
-    
-            const newStatus = currentStatus === 0 ? 1 : 0;
-            const item = items.find(item => item._id === itemId);
-    
-            if (!item) {
-                console.error(`Item with ID ${itemId} not found`);
-                return;
-            }
-    
-            try {
-                const response = await fetch(`/items/${itemId}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        ...item,
-                        status: newStatus
-                    })
-                });
-    
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                // console.log(`Item ${itemId} status updated to ${newStatus}`);
-    
-                // Update the status in the items array and re-render the items
-                items = items.map(item => item._id === itemId ? { ...item, status: newStatus } : item);
-                displayItems();
-            } catch (error) {
-                console.error(`Error updating status for item ${itemId}:`, error);
-            }
+    });
+
+    filterItems(0); // Set the initial tab to "Recent"
+}
+
+async function updateStatus(itemId, currentStatus) {
+    if (!itemId) {
+        console.error('Item ID is undefined');
+        return;
+    }
+
+    const newStatus = currentStatus === 0 ? 1 : 0;
+    const item = items.find(item => item._id === itemId);
+
+    if (!item) {
+        console.error(`Item with ID ${itemId} not found`);
+        return;
+    }
+
+    try {
+        const response = await fetch(`/items/${itemId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                ...item,
+                status: newStatus
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
-    
-        function filterItems(status) {
-            const recentItemsContainer = document.getElementById('recent-items-container');
-            const completedItemsContainer = document.getElementById('completed-items-container');
-            const orderListTitle = document.getElementById('order-list-title');
-            const recentTab = document.getElementById('recent-tab');
-            const completedTab = document.getElementById('completed-tab');
-    
-            if (status === 0) {
-                recentItemsContainer.style.display = 'block';
-                completedItemsContainer.style.display = 'none';
-                orderListTitle.innerText = 'Order List - Recent';
-                recentTab.classList.add('active');
-                completedTab.classList.remove('active');
-            } else if (status === 1) {
-                recentItemsContainer.style.display = 'none';
-                completedItemsContainer.style.display = 'block';
-                orderListTitle.innerText = 'Order List - Completed';
-                recentTab.classList.remove('active');
-                completedTab.classList.add('active');
-            }
-        }
+        // console.log(`Item ${itemId} status updated to ${newStatus}`);
+
+        // Update the status in the items array and re-render the items
+        items = items.map(item => item._id === itemId ? { ...item, status: newStatus } : item);
+        displayItems();
+    } catch (error) {
+        console.error(`Error updating status for item ${itemId}:`, error);
+    }
+}
+
+function filterItems(status) {
+    const recentItemsContainer = document.getElementById('recent-items-container');
+    const completedItemsContainer = document.getElementById('completed-items-container');
+    const orderListTitle = document.getElementById('order-list-title');
+    const recentTab = document.getElementById('recent-tab');
+    const completedTab = document.getElementById('completed-tab');
+
+    if (status === 0) {
+        recentItemsContainer.style.display = 'block';
+        completedItemsContainer.style.display = 'none';
+        orderListTitle.innerText = 'Order List - Recent';
+        recentTab.classList.add('active');
+        completedTab.classList.remove('active');
+    } else if (status === 1) {
+        recentItemsContainer.style.display = 'none';
+        completedItemsContainer.style.display = 'block';
+        orderListTitle.innerText = 'Order List - Completed';
+        recentTab.classList.remove('active');
+        completedTab.classList.add('active');
+    }
+}
+
+
+
     </script>
-    
+
 </body>
 
 </html>

@@ -82,30 +82,31 @@ HR12
 
         <div id="numberModal" class="modal">
             <div class="modal-content">
-                <span class="close">&times;</span>
+                <span class="close" id="closed" onclick="closedD()">&times;</span>
                 <h2>Verify Your Number</h2>
                 <p>Please enter your Name:</p>
                 <input type="text" id="name" placeholder="Enter Name">
                 <p>Please enter your phone number for verification:</p>
                 <input type="text" id="phoneNumber" placeholder="Enter phone number">
-                <button id="verifyNumber" type="button">Send OTP</button>
+                <!-- <button id="verifyNumber" type="button">Send OTP</button> -->
                 <div id="otpSection">
-                    <p>Enter the OTP sent to your Number:</p>
-                    <input type="text" id="otp" placeholder="Enter OTP" style=" padding: 6px;">
-                    <button id="verifyOtp" type="button" onclick="verifyOtp()" style="
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    padding: 8px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 12px;
-    margin:2px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-">
-                        Verify
+                    <!-- <p>Enter the OTP sent to your Number:</p> -->
+                    <!-- <input type="text" id="otp" placeholder="Enter OTP" style=" padding: 6px;"> -->
+                    <button id="verifyOtp" type="button" onclick="buyNow()" style="
+                        background-color: #4CAF50;
+                        border: none;
+                        color: white;
+                        padding: 8px;
+                        text-align: center;
+                        text-decoration: none;
+                        display: inline-block;
+                        font-size: 18px;
+                        margin:2px;
+                        cursor: pointer;
+                        transition: background-color 0.3s ease;
+                        border-radius: 10px;
+                    ">
+                        Place Order
                     </button>
 
                 </div>
@@ -161,7 +162,7 @@ HR12
                     <li>Maggi</li>
                 </a>
                 <a href="#Favorites">
-                    <li>Favorites</li>
+                    <li>Pizza</li>
                 </a>
             </div>
             <div class="menuList">
@@ -238,7 +239,8 @@ HR12
             id="Coffee">----------Cold Coffee----------</div>
         <div class="shop-content">
             <div class="product-box">
-                <img src="https://www.whiskaffair.com/wp-content/uploads/2021/03/Cold-Coffee-2-1.jpg" alt="" class="product-img">
+                <img src="https://www.whiskaffair.com/wp-content/uploads/2021/03/Cold-Coffee-2-1.jpg" alt=""
+                    class="product-img">
                 <h2 class="product-title">Cold Coffee</h2>
                 <span class="price">₹49</span>
                 <span class='add-cart'> Add to Cart</span>
@@ -620,7 +622,7 @@ HR12
         </div>
         <div class="Achi_si" id="Favorites"
             style="margin-top: 1.5rem; margin-bottom: 1.5rem; text-align: center; font-size: 1.3rem; font-weight: 500;  ; box-shadow: 2px 0 4px hsl(0 4% 15% / 10%);">
-            ----------Favorite Beginnings----------</div>
+            ----------Favorite Beginnings(Pizza)----------</div>
 
         <div class="shop-content">
             <div class="product-box">
@@ -642,7 +644,8 @@ HR12
                 <span class='add-cart' id="openPopupBtn"> Add to Cart</span>
             </div>
             <div class="product-box">
-                <img src="https://www.tastingtable.com/img/gallery/margherita-pizzas-origin-is-linked-to-italian-royalty/intro-1679947709.jpg" alt="" class="product-img">
+                <img src="https://www.tastingtable.com/img/gallery/margherita-pizzas-origin-is-linked-to-italian-royalty/intro-1679947709.jpg"
+                    alt="" class="product-img">
                 <h2 class="product-title">Margherita</h2>
                 <span class="price">₹159</span>
                 <span class='add-cart' id="openPopupBtn"> Add to Cart</span>
@@ -705,14 +708,16 @@ HR12
                 <img src="../images/1st combo.jpeg" alt="" class="product-img" style="display:none;">
                 <h2 class="product-title" style="padding-top: 2rem;">1st Combo</h2>
                 <span class="price">₹99</span>
-                <div style="padding: 1rem; font-size: larger;">(1 Cold coffee + Choose Any 1 single topping pizza.)</div>
+                <div style="padding: 1rem; font-size: larger;">(1 Cold coffee + Choose Any 1 single topping pizza.)
+                </div>
                 <span class='add-cart' id="openPopupBtn"> Add to Cart</span>
             </div>
             <div class="product-box">
                 <img src="../images/2nd combo.jpeg" alt="" class="product-img" style="display:none;">
                 <h2 class="product-title" style="padding-top: 2rem;">2nd Combo</h2>
                 <span class="price">₹159</span>
-                <div style="padding: 1rem; font-size: larger;">(Choose Any 1 Mojito  + Choose Any 1 Garlic Bread/Calzone.)</div>
+                <div style="padding: 1rem; font-size: larger;">(Choose Any 1 Mojito + Choose Any 1 Garlic
+                    Bread/Calzone.)</div>
                 <span class='add-cart' id="openPopupBtn"> Add to Cart</span>
             </div>
         </div>

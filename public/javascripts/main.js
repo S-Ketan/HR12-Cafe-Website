@@ -2,11 +2,15 @@ let cartIcon = document.querySelector('#cart-icon');
 let cart = document.querySelector('.cart');
 let closeCart = document.querySelector('#close-btn');
 let numberModal = document.getElementById('numberModal');
-let closeModal = document.querySelector('.modal .close');
+let closeModal = document.querySelector('.modal');
 let verifyButton = document.getElementById('verifyNumber');
 let phoneNumberInput = document.getElementById('phoneNumber');
 let otp = document.getElementById(`#otpSection`);
+let closedDiv = document.getElementById(`#closed`);
 
+function closedD(){
+    document.getElementById('numberModal').style.display = "none";
+}
 
 cartIcon.onclick = () => {
     cart.classList.add('active');
@@ -103,66 +107,105 @@ async function verifyNumber() {
 
 
 
-async function verifyOtp() {
+// async function verifyOtp() {
+//     let name = document.getElementById('name').value.trim();
+//     let phoneNumber = phoneNumberInput.value.trim();
+//     let otp = document.getElementById('otp').value.trim();
+
+//     try {
+//         const response = await fetch('/verifyOtp', {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//             },
+//             body: JSON.stringify({ mobile: phoneNumber, otp }),
+//         });
+
+//         if (!response.ok) {
+//             throw new Error('Network response was not ok');
+//         }
+
+//         const data = await response.json();
+//         console.log('Server response:', data.message);
+//         if (data.message !== 'OTP verified successfully') {
+//             throw new Error('OTP verification failed');
+//         }
+
+//         // logic that needs to be executed after successful verification
+//         alert('Order Placed');
+// let cartContent = document.getElementsByClassName('cart-content')[0];
+// let orderedItems = getOrderedItems();
+//         // console.log('Ordered Items:', JSON.stringify(orderedItems, null, 2));
+
+// fetch('/order', {
+//     method: 'POST',
+//     headers: {
+//         'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify(orderedItems),
+// })
+//     .then(response => response.text())
+//     .then(data => {
+//         console.log('Response from server:', data);
+//     })
+//     .catch((error) => {
+//         console.error('Error:', error);
+//     });
+
+// while (cartContent.hasChildNodes()) {
+//     cartContent.removeChild(cartContent.firstChild);
+// }
+// updateTotal();
+// window.location.reload();
+
+//     } catch (error) {
+//         console.error('Failed to fetch:', error);
+//         alert('There was a problem with your fetch operation: ' + error.message);
+//     }
+
+
+
+// }
+
+function buyNow() {
+
     let name = document.getElementById('name').value.trim();
     let phoneNumber = phoneNumberInput.value.trim();
-    let otp = document.getElementById('otp').value.trim();
 
-    try {
-        const response = await fetch('/verifyOtp', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ mobile: phoneNumber, otp }),
-        });
-
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-
-        const data = await response.json();
-        console.log('Server response:', data.message);
-        if (data.message !== 'OTP verified successfully') {
-            throw new Error('OTP verification failed');
-        }
-
-        // logic that needs to be executed after successful verification
-        alert('Order Placed');
-        let cartContent = document.getElementsByClassName('cart-content')[0];
-        let orderedItems = getOrderedItems();
-        // console.log('Ordered Items:', JSON.stringify(orderedItems, null, 2));
-
-        fetch('/order', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(orderedItems),
-        })
-            .then(response => response.text())
-            .then(data => {
-                console.log('Response from server:', data);
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-
-        while (cartContent.hasChildNodes()) {
-            cartContent.removeChild(cartContent.firstChild);
-        }
-        updateTotal();
-        window.location.reload();
-
-    } catch (error) {
-        console.error('Failed to fetch:', error);
-        alert('There was a problem with your fetch operation: ' + error.message);
+    if (name === "") {
+        alert('Please enter your name');
+        return;
     }
 
+    // Validate phone number format
+    if (phoneNumber === "" || !/^\d{10}$/.test(phoneNumber)) {
+        alert('Please enter a valid 10-digit phone number.');
+        return;
+    }
 
+    alert("order placed");
+    let cartContent = document.getElementsByClassName('cart-content')[0];
+    let orderedItems = getOrderedItems();
+    console.log("clicked")
+    fetch('/order', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(orderedItems),
+    })
+        .then(response => response.text())
+        .then(data => {
+            console.log('Response from server:', data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
 
-
-
+    while (cartContent.hasChildNodes()) {
+        cartContent.removeChild(cartContent.firstChild);
+    }
+    updateTotal();
 }
 
 function getOrderedItems() {
@@ -268,7 +311,7 @@ function updateSize(event, selectedSize) {
         addPrice = 0;
     }
     let priceText = shopProducts.getElementsByClassName('price')[0].innerText;
-    priceText = priceText.replace(/[^\d]/g, ''); 
+    priceText = priceText.replace(/[^\d]/g, '');
     let price = parseInt(priceText) + addPrice;
 
     let productImg = shopProducts.getElementsByClassName('product-img')[0].src;

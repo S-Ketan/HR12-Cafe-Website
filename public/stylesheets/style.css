@@ -321,6 +321,14 @@ section{
   scale: 0.90;
 }
 
+blockquote > a{
+  border-radius: 10px;
+  width: 240px;
+  height: 275px;
+  margin-bottom: 0rem;
+  scale: 0.90;
+}
+
 .product-title{
   font-weight: 600;
   font-size: 1.1rem;

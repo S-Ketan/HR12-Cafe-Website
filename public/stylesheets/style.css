@@ -248,12 +248,12 @@ section{
 
 .mainMenu{
   display: flex;
-  gap: 2rem;
+  gap: 1.15rem;
 }
 
 .menuList{
   display: flex;
-  gap: 2rem;
+  gap: 1.15rem;
 }
 
 .menuList > a > li{
@@ -415,7 +415,7 @@ section{
   }
   .menuList{
     margin-bottom: 1rem;
-    gap: 2rem;
+    gap: 1.15rem;
   }
   .shop {
     margin-top: 1rem !important; /* This will override the previous margin-top */

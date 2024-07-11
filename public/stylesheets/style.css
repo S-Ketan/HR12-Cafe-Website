@@ -132,6 +132,10 @@ header{
   cursor: pointer;
 }
 
+.scrolly{
+  height: 65vh; overflow-y: scroll;
+}
+
 .cart{
   position: fixed;
   top: 0;
@@ -142,6 +146,15 @@ header{
   background: var(--bg-color);
   box-shadow: -2px 0 4px hsl(0 4% 15% / 10%);
   transition: 300ms;
+}
+
+.cart-content{
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-buy{
+  position: fixed;
 }
 
 .active{
@@ -419,6 +432,9 @@ section{
   }
   .shop {
     margin-top: 1rem !important; /* This will override the previous margin-top */
+  }
+  .scrolly{
+    height: 75vh;
   }
 }
 

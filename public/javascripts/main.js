@@ -269,13 +269,14 @@ function addCartClicked(parentEvent) {
 
     for (let i = 0; i < sizeButtons.length; i++) {
         console.log("working");
-        sizeButtons[i].addEventListener('click', (event) => {
+        sizeButtons[i].onclick = (event) => {
             selectedSize = event.target.getAttribute('data-size');
             console.log('You selected: ' + selectedSize);
             popup.style.display = 'none';
             updateSize(parentEvent, selectedSize);
-        });
+        };
     }
+    
 
 
     if (parentEvent.target.getAttribute('att') == "1") {

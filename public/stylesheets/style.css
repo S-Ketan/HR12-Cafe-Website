@@ -300,7 +300,8 @@ section{
 }
 
 .shop{
-  margin-top: 2rem; 
+  /* margin-top: 2rem;  */
+  padding-top: 3rem;
 }
 
 .shop-content{
@@ -375,7 +376,7 @@ section{
 .add-cart{
   position: absolute;
   bottom: 9;
-  right: 3;
+  right: 0.2rem;
   background: var(--text-color);
   color: var(--bg-color);
   padding: 10px;
